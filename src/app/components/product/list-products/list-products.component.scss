@@ -9,9 +9,8 @@
   position: relative;
 }
 
-select {
-  width: 100%;
-  margin-right: 50px;
+.side-bar {
+  font-weight: 500;
 }
 
 .product-card img {
@@ -79,6 +78,11 @@ select {
   max-width: 100%;
 }
 
+.name-product:hover {
+  cursor: pointer;
+  color: #e47911;
+}
+
 .price sup {
   font-size: 12px;
 }
@@ -110,7 +114,9 @@ button {
 }
 
 button:hover {
-  background-color: #235b75;
+  background-color: #ffffff;
+  color: #e47911;
+  border-color: #e47911;
 }
 
 .loader-overlay {

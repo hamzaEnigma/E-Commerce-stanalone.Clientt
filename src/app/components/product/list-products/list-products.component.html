@@ -3,77 +3,75 @@
     @let min = minPurchasePrice$ | async;
     @let max = maxPurchasePrice$ | async;
     <!-- Sidebar -->
-    <div class="col-md-3">
-        <!-- Search -->
-        <div class="mb-4 bg-white border rounded search shadow-sm">
-            <input type="text" [formControl]="searchProductFormControl" class="form-control"
-                placeholder="Search products..." />
-        </div>
-
+    <div class="col-md-2 side-bar">
         <!-- Filter by Price -->
-        <div class="mb-4 p-3 bg-white border rounded  shadow-sm">
-            <h5 class="mb-3">Filter by price</h5>
-            <input type="range" class="form-range" [min]="0" [max]="max ?? 1000"
-                [formControl]="filterPriceFormControl" />
-            <div class="d-flex justify-content-between text-muted small">
-                <span>{{0}} $</span>
-                <span> {{ filterPriceFormControl.value ?? min }} $</span>
-                <span>{{max}} $ </span>
+        <div class="mb-3 p-2 bg-white border rounded shadow-sm small">
+            <h6 class="mb-2 fw-bold" style="font-size: 0.9rem;">Prix</h6>
+            <input type="range" class="form-range" [min]="0" [max]="max ?? 1000" [formControl]="filterPriceFormControl"
+                style="height: 0.75rem;" />
+            <div class="d-flex justify-content-between text-muted" style="font-size: 0.75rem;">
+                <span>{{ 0 }} $</span>
+                <span>{{ filterPriceFormControl.value ?? min }} $</span>
+                <span>{{ max }} $</span>
             </div>
-            <button class="btn btn-primary px-4  w-100" (click)="resetFilters()">Reset</button>
+            <button class="btn btn-sm btn-primary mt-2 w-100 py-1" (click)="resetFilters()">Réinitialiser</button>
         </div>
 
         <!-- Filter by Category -->
-        <div class="bg-white border rounded p-3 shadow-sm">
-            <h5 class="mb-3">Filter by categories</h5>
-            <ul class="list-unstyled mt-3">
-                <li *ngFor="let item of categories">
-                    <label class="text-muted">
+        <div class="bg-white border rounded p-2 shadow-sm small">
+            <h6 class="mb-2 fw-bold" style="font-size: 0.9rem;">Catégories</h6>
+            <ul class="list-unstyled mt-2 mb-1" style="font-size: 0.8rem;">
+                <li *ngFor="let item of categories" class="mb-1">
+                    <label class="text-muted d-block">
                         <input type="radio" [value]="item.categoryName" [formControl]="filterCategoryFormControl"
-                            class="form-check-input me-2" name="category" />
+                            class="form-check-input me-1" name="category" style="scale: 0.9;" />
                         {{ item.categoryName }}
                     </label>
                 </li>
                 <li>
-                    <label class="text-muted">
+                    <label class="text-muted d-block">
                         <input type="radio" value="" [formControl]="filterCategoryFormControl"
-                            class="form-check-input me-2" name="category" />
-                        All Categories
+                            class="form-check-input me-1" name="category" style="scale: 0.9;" />
+                        Toutes les catégories
                     </label>
                 </li>
             </ul>
         </div>
-
     </div>
+
     <!-- END Sidebar -->
 
     <!-- Products -->
-    <div class="col-md-9 rounded">
+    <div class="col-md-10 rounded">
         <div class="text-center py-5 loader-overlay" *ngIf="isLoading$ |async; else productsContent">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
         <ng-template #productsContent>
-            <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <!-- Left: Results -->
                 <select class="form-select w-auto shadow-sm">
-                    <option>Showing {{ searchResult?.length}} results</option>
+                    <option>Showing {{ searchResult?.length }} results</option>
                 </select>
+
+                <!-- Center: Search input, takes most space -->
+                <div class="flex-grow-1">
+                    <input type="text" [formControl]="searchProductFormControl" class="form-control shadow-sm"
+                        placeholder="Search products..." />
+                </div>
+
+                <!-- Right: Sorting -->
                 <select class="form-select w-auto shadow-sm">
                     <option>Default sorting</option>
                 </select>
             </div>
             <div class="row g-4">
                 @for (item of searchResult; track $index) {
-                <div class="col-md-4">
+                <div class="col-6 col-md-3">
                     <div class="product-card">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
-                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#cccccc"></rect>
-                            <text x="50%" y="50%" fill="#666" dy=".3em" text-anchor="middle">Image</text>
-                        </svg>
+                        <img [src]="getProductImage(item)" alt="{{ item.productName }}" class="card-img-top"
+                            style="object-fit: cover; height: 180px; width: 100%;" />
                         <p class="name-product">{{item.productName}} ....</p>
                         <span class="category">{{item.category?.categoryName}}</span>
                         <div class="rating">

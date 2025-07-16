@@ -30,7 +30,7 @@ export class ListProductsComponent {
   mockProductService = inject(MockProductService);
   searchProductFormControl: FormControl = new FormControl<string>('');
   filterPriceFormControl: FormControl = new FormControl<number>(0);
-  filterCategoryFormControl : FormControl = new FormControl<string>('');
+  filterCategoryFormControl: FormControl = new FormControl<string>('');
   isLoading$ = new BehaviorSubject<boolean>(false);
 
   filteredProducts$: Observable<Product[]> = combineLatest([
@@ -39,9 +39,9 @@ export class ListProductsComponent {
       debounceTime(400)
     ),
     this.filterPriceFormControl.valueChanges.pipe(startWith(0)),
-    this.filterCategoryFormControl.valueChanges.pipe(startWith(''))
+    this.filterCategoryFormControl.valueChanges.pipe(startWith('')),
   ]).pipe(
-    tap(x=>this.isLoading$.next(true)),
+    tap((x) => this.isLoading$.next(true)),
     switchMap(([search, price, category]) => {
       const searchData = search === null ? '' : search;
       return this.search(searchData).pipe(
@@ -49,8 +49,13 @@ export class ListProductsComponent {
           (products) =>
             products
               .filter((x) => x.purchasePrice !== undefined) // exclude the undefined values
-              .filter((x) => x.purchasePrice! >= price
-               && (category === '' || x.category?.categoryName!.toLowerCase() === category.toLowerCase())) // exlude the lower values
+              .filter(
+                (x) =>
+                  x.purchasePrice! >= price &&
+                  (category === '' ||
+                    x.category?.categoryName!.toLowerCase() ===
+                      category.toLowerCase())
+              ) // exlude the lower values
         )
       );
     }),
@@ -88,9 +93,10 @@ export class ListProductsComponent {
   }
 
   loadCategories(): void {
-    this.mockProductService.getCategories()
-    .pipe(tap(items=> this.categories = items ))
-    .subscribe()
+    this.mockProductService
+      .getCategories()
+      .pipe(tap((items) => (this.categories = items)))
+      .subscribe();
   }
 
   loadProducts(): void {
@@ -109,6 +115,20 @@ export class ListProductsComponent {
   }
 
   resetFilters() {
-  this.filterPriceFormControl.setValue(0);
+    this.filterPriceFormControl.setValue(0);
+    this.filterCategoryFormControl.setValue('');
+  }
+
+  getProductImage(item: Product): string {
+    const fallbackImages = [
+      'https://plus.unsplash.com/premium_photo-1707935175109-ba307d98bfe2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://plus.unsplash.com/premium_photo-1668616816933-f3874102f54b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1521483451569-e33803c0330c?q=80&w=1085&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1637006618936-bcd4dd1911c9?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    ];
+
+    // Use image from product if exists, else fallback randomly
+    return fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
   }
 }

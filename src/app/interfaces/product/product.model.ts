@@ -7,5 +7,7 @@ export interface Product {
   purchasePrice?:number;
   unitsInStock?: number;
   categoryId?:number;
-  category?: Category
+  category?: Category;
+  imageUrl?: string;
+  description?:string;
 }
