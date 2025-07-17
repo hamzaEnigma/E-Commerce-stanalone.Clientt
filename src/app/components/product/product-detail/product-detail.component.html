@@ -45,7 +45,7 @@
     <input type="number" id="quantity" name="quantity" placeholder="quantity " min="1" [(ngModel)]="quantity" required />
 
 
-    <button class="btn btn-primary">Ajouter au panier</button>
+    <button class="btn btn-primary" (click)="addToChart(p!)">Ajouter au panier</button>
     <button class="btn btn-orange">Acheter cet article</button>
   </div>
 </div>

@@ -16,7 +16,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { Category } from '../../../interfaces/category.model';
+import { Category } from '../../../interfaces/product/category.model';
 import { RouterLink } from '@angular/router';
 
 @Component({
