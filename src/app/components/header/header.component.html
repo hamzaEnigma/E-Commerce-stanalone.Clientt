@@ -4,14 +4,14 @@
     <a class="navbar-brand fw-bold fs-4" href="#">Cosmetics</a>
     <div class="collapse navbar-collapse justify-content-center">
       <ul class="navbar-nav gap-3">
-        <li class="nav-item"><a class="nav-link" routerLink="/">ACCEUIL</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/">BOUTIQUE</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/products">ACCEUIL</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/products">BOUTIQUE</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/">A PROPOS</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/">CONTACT</a></li>
       </ul>
     </div>
     <div class="position-relative panier-icon" >
-     <a routerLink="/cart">🛒 <span class="badge bg-dark position-absolute top-0 start-100 translate-middle rounded-circle"> {{count}}</span></a>
+     <a routerLink="/cart">🛒 <span class="badge bg-dark position-absolute top-0 start-100 translate-middle rounded-circle"> {{panierCount()}}</span></a>
     </div>
   </div>
 </nav>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ChartService } from '../../services/chart/chart.service';
 import { tap } from 'rxjs';
@@ -12,8 +12,8 @@ import { tap } from 'rxjs';
 export class HeaderComponent {
   cartService = inject(ChartService);
   count = 0;
-  
+  panierCount: Signal<number> = computed(() => this.cartService.itemCartSignal().length);
+
   ngOnInit(){
-    this.cartService.cartItems$.pipe(tap((items)=>this.count= items.length)).subscribe();
   }
 }

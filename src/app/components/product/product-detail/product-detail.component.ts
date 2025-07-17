@@ -29,6 +29,6 @@ export class ProductDetailComponent {
     Quantity: this.quantity,
     SalePrice: 0
   }
-    this.chartService.addToChart(order);
+    this.chartService.addTochartSignal(order);
   }
 }

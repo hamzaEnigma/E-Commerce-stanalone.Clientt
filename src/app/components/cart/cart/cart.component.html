@@ -13,7 +13,7 @@
                     style="object-fit: cover; height: 230px; width: 22%;     border-radius: 5px;" />
 
                 <div class="details flex-grow-1">
-                    <h5 class="mb-1 fw-normal"
+                    <h5 class="mb-1 fw-normal text-truncate-2"
                         style="font-size: 1.3rem;font-weight: bold; font-weight: 700 !important;">
                         {{item.product?.productName}} : {{item.product?.description}}
                     </h5>
@@ -57,12 +57,10 @@
 
         <div class="col-md-3">
 
-            <div class="product-right card">
-
-                <div class="d-flex align-items-center justify-content-center me-2 mt-3">
-                    <p class="price fw-bold total">Total:</p>
-                    <p class="fw-bold price total">{{totalSum?.toFixed(2)}}€</p>
-
+            <div class="product-right card">      
+                <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+                    <p class="fw-bold m-0" style="font-size: 1.5rem;">Total :</p>
+                    <p class="fw-bold text-end m-0" style="font-size: 1.8rem;">{{ totalSum?.toFixed(2) }} €</p>
                 </div>
                 <div class="delivery-box">
                     <strong>{{countProduct}}</strong> ARTICLE(S)<br />

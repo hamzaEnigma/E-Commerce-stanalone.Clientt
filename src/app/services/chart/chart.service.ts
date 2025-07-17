@@ -8,11 +8,25 @@ import { orderDetail } from '../../interfaces/chart/order-detail.model';
 export class ChartService {
   itemsCartSubject = new BehaviorSubject<orderDetail[]>([]);
   cartItems$ = this.itemsCartSubject.asObservable();
+  itemCartSignal = signal<orderDetail[]>([]);
   totalSubject = new BehaviorSubject<number | undefined>(0);
   total$ = this.totalSubject.asObservable();
   panierCount = signal(0);
 
   constructor() {}
+
+  addTochartSignal(item:orderDetail){
+    const itemsUpdated = [...this.itemCartSignal()]
+    const existingIndex = itemsUpdated.findIndex((i) => i.productId === item.productId);
+    if (existingIndex !== -1) {
+      // Update quantity and price if needed
+      itemsUpdated[existingIndex].Quantity += item.Quantity;
+    } else {
+    itemsUpdated.push(item);
+    this.itemCartSignal.set(itemsUpdated); 
+    this.updateTotal(itemsUpdated);     
+  }
+  }
 
   addToChart(item: orderDetail) {
     const cartItems = this.itemsCartSubject.value;

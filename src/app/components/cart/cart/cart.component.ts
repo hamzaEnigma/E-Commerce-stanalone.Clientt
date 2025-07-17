@@ -17,12 +17,10 @@ export class CartComponent {
   totalSum: number | undefined = 0;
 
   ngOnInit() {
-    this.chartService.cartItems$
-      .pipe(tap((x) => (this.orderDetails = x)))
-      .subscribe();
+    this.orderDetails = this.chartService.itemCartSignal();
     this.chartService.total$.pipe(tap((x) => (this.totalSum = x))).subscribe();
   }
-  
+
   incrementQuantity(item: orderDetail): void {
     item.Quantity++;
     this.chartService.updateTotal(this.orderDetails!);
