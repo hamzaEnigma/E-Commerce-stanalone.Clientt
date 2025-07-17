@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { orderDetail } from '../../../interfaces/chart/order-detail.model';
-import { ChartService } from '../../../services/chart/chart.service';
 import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { orderDetail } from '../../interfaces/chart/order-detail.model';
+import { ChartService } from '../../services/chart/chart.service';
 
 @Component({
   selector: 'app-cart',
