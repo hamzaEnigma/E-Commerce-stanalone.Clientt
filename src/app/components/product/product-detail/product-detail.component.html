@@ -1,0 +1,51 @@
+<div class="amazon-product">
+    @let p = selectedProduct;
+  <div class="product-left">
+    <img src="{{p?.imageUrl}}" alt="{{p?.productName}}" />
+  </div>
+
+  <div class="product-middle">
+    <h1>{{p?.productName}}</h1>
+    <span class="category">{{p?.category?.categoryName}}</span>
+
+    <p class="subtitle">
+      {{p?.description}}
+    </p>
+
+    <div class="price-section">
+      <span class="price">{{p?.purchasePrice}}<sup>,12 €</sup></span>
+      <p class="monthly">Ou {{ (p?.purchasePrice !== undefined) ? (p?.purchasePrice! / 4).toFixed(2)  : 0}} € × 4 mois (0,0% de frais)</p>
+      <p class="delivery">Livraison GRATUITE mercredi 23 juillet</p>
+    </div>
+
+    <p class="details">
+      <strong>Poids  :</strong> 1 kg<br />
+      <strong>Marque  :   </strong>Corsair<br />
+      <strong>Dimensions  : </strong>  50P x 38L x 84H cm<br />
+      <strong>Couleur  :</strong> Gris et Noir
+    </p>
+    <hr>
+    <span class="category">{{p?.category?.categoryName}}</span>
+    <p> {{p?.category?.description}}</p>
+  </div>
+
+  <div class="product-right card">
+    <div class="price-box">
+      <p class="price">{{p?.purchasePrice}}<sup>,00 €</sup></p>
+      <p class="free-return">Retours GRATUITS</p>
+    </div>
+
+    <div class="delivery-box">
+      Livraison GRATUITE <strong>23 juillet</strong><br />
+      <small>Commandez dans les 3 h 12 min</small>
+    </div>
+
+    <p class="stock">✅ En stock</p>
+
+    <input type="number" id="quantity" name="quantity" placeholder="quantity " min="1" [(ngModel)]="quantity" required />
+
+
+    <button class="btn btn-primary">Ajouter au panier</button>
+    <button class="btn btn-orange">Acheter cet article</button>
+  </div>
+</div>

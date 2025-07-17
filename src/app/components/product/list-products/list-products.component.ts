@@ -17,10 +17,11 @@ import {
   tap,
 } from 'rxjs';
 import { Category } from '../../../interfaces/category.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list-products',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './list-products.component.html',
   styleUrl: './list-products.component.scss',
 })
@@ -119,16 +120,7 @@ export class ListProductsComponent {
     this.filterCategoryFormControl.setValue('');
   }
 
-  getProductImage(item: Product): string {
-    const fallbackImages = [
-      'https://plus.unsplash.com/premium_photo-1707935175109-ba307d98bfe2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://plus.unsplash.com/premium_photo-1668616816933-f3874102f54b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1521483451569-e33803c0330c?q=80&w=1085&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1637006618936-bcd4dd1911c9?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ];
-
-    // Use image from product if exists, else fallback randomly
-    return fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+  selectProduct(p:Product){
+    this.mockProductService.selectedProductSignal.set(p);  
   }
 }

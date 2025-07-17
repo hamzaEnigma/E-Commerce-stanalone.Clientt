@@ -70,9 +70,9 @@
                 @for (item of searchResult; track $index) {
                 <div class="col-6 col-md-3">
                     <div class="product-card">
-                        <img [src]="getProductImage(item)" alt="{{ item.productName }}" class="card-img-top"
-                            style="object-fit: cover; height: 180px; width: 100%;" />
-                        <p class="name-product">{{item.productName}} ....</p>
+                        <img [src]="item.imageUrl" alt="{{ item.productName }}" class="card-img-top"
+                            style="object-fit: cover; height: 180px; width: 100%;"  />
+                        <p class="name-product" (click)="selectProduct(item)" routerLink="product/details">{{item.productName}}</p>
                         <span class="category">{{item.category?.categoryName}}</span>
                         <div class="rating">
                             <span>4,2 ★★★★☆</span>

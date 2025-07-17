@@ -78,7 +78,8 @@
   max-width: 100%;
 }
 
-.name-product:hover {
+.name-product:hover,
+img:hover {
   cursor: pointer;
   color: #e47911;
 }
