@@ -4,8 +4,20 @@ import { ProductDetailComponent } from './components/product/product-detail/prod
 import { CartComponent } from './views/cart/cart.component';
 
 export const routes: Routes = [
-      { path: 'products', component: ListProductsComponent },
-      { path: 'product/details', component: ProductDetailComponent },
-      { path: 'cart', component: CartComponent },
-      {path:'',pathMatch:'full',redirectTo:'products'}
+  { path: 'products', component: ListProductsComponent },
+  {
+    path: 'product/details',
+    loadComponent: async () =>
+      (
+        await import(
+          './components/product/product-detail/product-detail.component'
+        )
+      ).ProductDetailComponent,
+  },
+  {
+    path: 'cart',
+    loadComponent: async () =>
+      (await import('./views/cart/cart.component')).CartComponent,
+  },
+  { path: '', pathMatch: 'full', redirectTo: 'products' },
 ];

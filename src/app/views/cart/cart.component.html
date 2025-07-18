@@ -1,6 +1,6 @@
 <div class="container my-4">
-    @let listDetails = orderDetails;
-    @let countProduct = orderDetails?.length;
+    @let listDetails = orderDetails();
+    @let countProduct = orderDetails.length;
     <div class="row">
         <div class="col-md-9">
             @for (item of listDetails; track $index) {

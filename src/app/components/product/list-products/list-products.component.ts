@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { Product } from '../../../interfaces/product/product.model';
-import { ProductService } from '../../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { MockProductService } from '../../../services/mock-product.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';

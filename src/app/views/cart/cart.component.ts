@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,24 +12,23 @@ import { ChartService } from '../../services/chart/chart.service';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent {
-  orderDetails: orderDetail[] | undefined;
-  chartService = inject(ChartService);
+  private chartService = inject(ChartService);
+  orderDetails: Signal<orderDetail[]> = computed(() => this.chartService.itemCartSignal());
   totalSum: number | undefined = 0;
 
   ngOnInit() {
-    this.orderDetails = this.chartService.itemCartSignal();
     this.chartService.total$.pipe(tap((x) => (this.totalSum = x))).subscribe();
   }
 
   incrementQuantity(item: orderDetail): void {
     item.Quantity++;
-    this.chartService.updateTotal(this.orderDetails!);
+    this.chartService.updateTotal(this.orderDetails());
   }
 
   decrementQuantity(item: orderDetail): void {
     if (item.Quantity > 1) {
       item.Quantity--;
-      this.chartService.updateTotal(this.orderDetails!);
+      this.chartService.updateTotal(this.orderDetails());
     }
   }
 }

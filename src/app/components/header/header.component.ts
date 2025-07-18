@@ -11,7 +11,6 @@ import { tap } from 'rxjs';
 })
 export class HeaderComponent {
   cartService = inject(ChartService);
-  count = 0;
   panierCount: Signal<number> = computed(() => this.cartService.itemCartSignal().length);
 
   ngOnInit(){
