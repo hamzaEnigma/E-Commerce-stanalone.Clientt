@@ -2,3 +2,9 @@ body {
     background-color: var(--linkedin);
     font-family: var(--font-family);
 }
+
+.active-link {
+  background-color: var(--yellow-amazon);
+  border-radius: var(--radius);
+  color: white !important;
+}
