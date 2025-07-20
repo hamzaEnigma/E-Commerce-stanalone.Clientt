@@ -9,8 +9,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
       <div class="d-flex flex-column gap-3">
 
         <div class="d-flex gap-2 mb-3">
-          <a class="btn btn-primary" routerLink="list" routerLinkActive="router-link-active" >liste</a>
-          <a class="btn btn-primary" routerLink="add" routerLinkActive="router-link-active">nouveau</a>
+          <a class="" routerLink="list" routerLinkActive="active-link" >liste</a>
+          <a class="" routerLink="add" routerLinkActive="active-link">nouveau</a>
         </div>
 
         <div class="form-area">
@@ -20,7 +20,18 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   `,
   styles: `:host{
     a{
-      width: 100px;
+      padding: 8px 12px;
+      border-radius: 13px;
+      font-weight: bold;
+      color:black;
+      cursor: pointer;
+      width: 100%;
+      text-decoration: none;
+      width:100px;
+    }
+    
+    .active-link{
+      background-color: #e47911
     }
   }`
 })

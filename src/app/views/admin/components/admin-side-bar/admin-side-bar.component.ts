@@ -5,9 +5,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'app-admin-side-bar',
   imports: [RouterLink,RouterLinkActive],
   template: `
-    <div class="card d-flex flex-column gap-3">
-       <a routerLink="products" routerLinkActive="active-link" class="btn btn-primary p-2">Products</a>
-      <a routerLink="categories" routerLinkActive="active-link" class="btn btn-primary p-2">Categories </a>
+    <div class="card d-flex flex-column gap-1">
+       <a routerLink="products" routerLinkActive="active-link" >Products</a>
+      <a routerLink="categories" routerLinkActive="active-link">Categories </a>
     </div>
   `,
   styles: `:host {
@@ -16,6 +16,19 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     height:100%;
     .card {
       flex: 1 1 auto;
+    }
+
+    a{
+      padding: 8px 12px;
+      border-radius: 13px;
+      font-weight: bold;
+      color:black;
+      cursor: pointer;
+      width: 100%;
+      text-decoration: none;
+    }
+    .active-link{
+      background-color: #e47911
     }
 }`,
 })

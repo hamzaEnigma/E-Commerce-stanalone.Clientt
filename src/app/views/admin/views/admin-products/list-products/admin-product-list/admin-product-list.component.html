@@ -1,19 +1,17 @@
-<div class="products">
-
-  @let searchResult = products; 
-  <div>Nombre de résultats: {{ searchResult?.length }} </div>
-  <div class="list">
-    <ul>
-      @for(p of searchResult; track p) {
-    <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
-      <span>{{ p.productName }} - {{ p.unitsInStock }} pièces</span>
+@let searchResult = products;
+<div class="list">
+  <ul>
+    <li class="d-flex justify-content-between align-items-center py-2 card ">Nombre de résultats: {{
+      searchResult?.length }} </li>
+    @for(p of searchResult; track p) {
+    <li class="d-flex flew-row justify-content-between align-items-center py-2 card">
+      <span>{{ p.productName }} - {{ p.purchasePrice}}€ </span>
 
       <span>
-        <a [routerLink]="['/products/update', p.productId]" class="me-2 text-primary">Modifier</a>
-        <a  class="text-danger" style="cursor: pointer;">Supprimer</a>
+        <a [routerLink]="['/products/update', p.productId]" class="me-2 modif">Modifier</a>
+        <a class="text-danger" style="cursor: pointer;">Supprimer</a>
       </span>
     </li>
-      }
-    </ul>
-</div>
+    }
+  </ul>
 </div>
