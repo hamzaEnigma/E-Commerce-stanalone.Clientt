@@ -1,0 +1,19 @@
+<div class="products">
+
+  @let searchResult = products; 
+  <div>Nombre de résultats: {{ searchResult?.length }} </div>
+  <div class="list">
+    <ul>
+      @for(p of searchResult; track p) {
+    <li class="d-flex justify-content-between align-items-center py-2 border-bottom">
+      <span>{{ p.productName }} - {{ p.unitsInStock }} pièces</span>
+
+      <span>
+        <a [routerLink]="['/products/update', p.productId]" class="me-2 text-primary">Modifier</a>
+        <a  class="text-danger" style="cursor: pointer;">Supprimer</a>
+      </span>
+    </li>
+      }
+    </ul>
+</div>
+</div>

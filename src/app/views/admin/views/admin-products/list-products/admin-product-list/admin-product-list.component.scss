@@ -1,0 +1,26 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 5;
+}
+
+li {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 5px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background 0.3s ease;  width: 100%;
+  box-sizing: border-box;
+
+}
+
+li:hover {
+    background: #3a6dff;
+}
+
+.list {
+    overflow-y: scroll;
+    height: 466px;
+}
