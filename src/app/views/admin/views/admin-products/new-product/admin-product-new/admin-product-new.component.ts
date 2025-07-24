@@ -4,18 +4,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Category } from '../../../../../../interfaces/product/category.model';
 import { MockProductService } from '../../../../../../services/mock-product.service';
 import { tap } from 'rxjs';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-product-new',
   standalone: true,
-  imports: [MatSnackBarModule,ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './admin-product-new.component.html',
   styleUrl: './admin-product-new.component.scss',
 })
 export class AdminProductNewComponent {
   private mockService = inject(MockProductService);
-  private snackBar = inject(MatSnackBar);
   private router = inject(Router);
   productForm: FormGroup;
   formValue :any;
@@ -40,10 +38,7 @@ export class AdminProductNewComponent {
   onSubmit(){
     if (this.productForm.valid){
       this.mockService.create(this.productForm.value).subscribe(()=>{
-            this.snackBar.open('✅ Produit créé avec succès !', 'Fermer', {
-          duration: 3000,
-          verticalPosition: 'bottom',
-        });
+            
         this.router.navigate(["/admin/products/list"])
       })
     }

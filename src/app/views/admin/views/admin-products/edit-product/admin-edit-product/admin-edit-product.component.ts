@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockProductService } from '../../../../../../services/mock-product.service';
 import { Category } from '../../../../../../interfaces/product/category.model';
@@ -10,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-edit-product',
-  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin-edit-product.component.html',
   styleUrl: './admin-edit-product.component.scss'
 })
@@ -19,7 +18,6 @@ private route = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private mockService = inject(MockProductService);
-  private snackBar = inject(MatSnackBar);
 
   productForm: FormGroup;
   categories: Category[] = [];
@@ -61,10 +59,6 @@ private route = inject(ActivatedRoute);
     
     if (this.productForm.valid) {
       this.mockService.update(this.productForm.value).subscribe(() => {
-        this.snackBar.open('✅ Produit modifié avec succès !', 'Fermer', {
-          duration: 3000,
-          verticalPosition: 'bottom',
-        });
         this.router.navigate(['/admin/products/list']);
       },);
     }else {

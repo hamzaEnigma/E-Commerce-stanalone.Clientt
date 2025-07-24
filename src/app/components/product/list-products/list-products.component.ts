@@ -17,6 +17,8 @@ import {
 } from 'rxjs';
 import { Category } from '../../../interfaces/product/category.model';
 import { RouterLink } from '@angular/router';
+import { ChartService } from '../../../services/chart/chart.service';
+import { ToastService } from '../../../services/toast-service/toast.service';
 
 @Component({
   selector: 'app-list-products',
@@ -25,9 +27,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './list-products.component.scss',
 })
 export class ListProductsComponent {
+  private mockProductService = inject(MockProductService);
+  private chartService = inject(ChartService);
+  private toastService = inject(ToastService);
   products: Product[] = [];
   categories: Category[] = [];
-  mockProductService = inject(MockProductService);
   searchProductFormControl: FormControl = new FormControl<string>('');
   filterPriceFormControl: FormControl = new FormControl<number>(0);
   filterCategoryFormControl: FormControl = new FormControl<string>('');
@@ -117,9 +121,14 @@ export class ListProductsComponent {
   resetFilters() {
     this.filterPriceFormControl.setValue(0);
     this.filterCategoryFormControl.setValue('');
+    this.toastService.show('Filters initialisées')
   }
 
   selectProduct(p:Product){
     this.mockProductService.selectedProductSignal.set(p);  
+  }
+
+  AddToChart(item:Product){
+    this.chartService.addTochartWithQuantity(item,1);
   }
 }

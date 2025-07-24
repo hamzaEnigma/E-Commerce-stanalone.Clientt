@@ -4,7 +4,6 @@ import { MockProductService } from '../../../../../../services/mock-product.serv
 import { finalize, tap } from 'rxjs';
 import { Category } from '../../../../../../interfaces/product/category.model';
 import { RouterLink } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -14,7 +13,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AdminProductListComponent {
   private productService = inject(MockProductService);
-  private snackBar = inject(MatSnackBar);
   products: Product[] = [];
   categories: Category[] = [];
 
@@ -43,9 +41,6 @@ export class AdminProductListComponent {
       .delete(p)
       .pipe(
         tap(() => {
-          this.snackBar.open('❌ Produit supprimé', 'Fermer', {
-            duration: 2000,
-          });
         }),
         finalize(() => this.loadProducts())
       )
