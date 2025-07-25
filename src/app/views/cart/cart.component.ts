@@ -13,7 +13,7 @@ import { ChartService } from '../../services/chart/chart.service';
 })
 export class CartComponent {
   private chartService = inject(ChartService);
-  orderDetails: Signal<orderDetail[]> = computed(() => this.chartService.itemCartSignal());
+  orderDetails: Signal<orderDetail[]> = computed(() => this.chartService.itemsCart());
   totalSum: number | undefined = 0;
 
   ngOnInit() {

@@ -129,6 +129,6 @@ export class ListProductsComponent {
   }
 
   AddToChart(item:Product){
-    this.chartService.addTochartWithQuantity(item,1);
+    this.chartService.addToChart(item,1);
   }
 }

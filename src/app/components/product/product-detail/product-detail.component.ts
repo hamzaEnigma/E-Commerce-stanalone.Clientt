@@ -22,13 +22,6 @@ export class ProductDetailComponent {
   }
   
   addToChart(p:Product){
-    const order:orderDetail = {
-    product: this.selectedProduct,
-    OrderId: undefined,
-    productId: this.selectedProduct?.productId,
-    Quantity: this.quantity,
-    SalePrice: 0
-  }
-    this.chartService.addTochartSignal(order);
+    this.chartService.addToChart(p,this.quantity);
   }
 }

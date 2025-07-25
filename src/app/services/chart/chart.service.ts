@@ -10,7 +10,8 @@ import { ToastService } from '../toast-service/toast.service';
 export class ChartService {
   itemsCartSubject = new BehaviorSubject<orderDetail[]>([]);
   cartItems$ = this.itemsCartSubject.asObservable();
-  itemCartSignal = signal<orderDetail[]>([]);
+  private _itemCartSignal = signal<orderDetail[]>([]);
+  itemsCart = this._itemCartSignal.asReadonly();
   totalSubject = new BehaviorSubject<number | undefined>(0);
   private toastService = inject(ToastService);
   total$ = this.totalSubject.asObservable();
@@ -18,12 +19,41 @@ export class ChartService {
 
   constructor() {}
 
-  addTochartSignal(item: orderDetail) {
-    const itemsUpdated = [...this.itemCartSignal()];
-      itemsUpdated.push(item);
-      this.itemCartSignal.set(itemsUpdated);
-      this.updateTotal(itemsUpdated);
-      this.toastService.show(`${item.product?.productName} is added to chart`)
+  addToChart(product: Product, q: number) {
+    const itemsUpdated = [...this.itemsCart()];
+    const index = this.findProductInChart(product.productId!);
+
+    if (index !== -1) {
+      itemsUpdated[index].Quantity += q;
+      this.toastService.show(`Quantité ${product?.productName} est mis à jour`);
+    } else {
+      const order = this.createOrderDetail(product, q);
+      itemsUpdated.push(order);
+      this.toastService.show(`Produit ${product?.productName} ajouté au panier`);
+    }
+
+    this._itemCartSignal.set(itemsUpdated);
+    this.updateTotal(itemsUpdated);
+  }
+
+  getOrderId(): number {
+    const ids = this.itemsCart().map((x) => x.OrderId ?? 0);
+    const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
+    return nextId;
+  }
+  
+  private findProductInChart(ProductId: number): number {
+    return this.itemsCart().findIndex((x) => x.product?.productId === ProductId);
+  }
+
+  private createOrderDetail(product: Product, quantity: number): orderDetail {
+    return {
+      product: product,
+      OrderId: this.getOrderId(),
+      productId: product.productId,
+      Quantity: quantity,
+      SalePrice: 0,
+    };
   }
 
   updateTotal(items: orderDetail[]) {
@@ -35,18 +65,4 @@ export class ChartService {
     this.totalSubject.next(total);
   }
 
-  addTochartWithQuantity(product: Product, quantity: number) {
-    const order: orderDetail = {
-      product: product,
-      OrderId: undefined,
-      productId: product.productId,
-      Quantity: quantity,
-      SalePrice: 0,
-    };
-    const itemsUpdated = [...this.itemCartSignal()];
-      itemsUpdated.push(order);
-      this.itemCartSignal.set(itemsUpdated);
-      this.updateTotal(itemsUpdated);
-      this.toastService.show(`${product.productName} is added to chart` )  
-  }
 }
