@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { ListProductsComponent } from './components/product/list-products/list-products.component';
-import { AdminComponent } from './views/admin/admin.component';
+import { ListProductsComponent } from './views/product/list-products/list-products.component';
 
 export const routes: Routes = [
   { path: 'products', component: ListProductsComponent },
@@ -9,7 +8,7 @@ export const routes: Routes = [
     loadComponent: async () =>
       (
         await import(
-          './components/product/product-detail/product-detail.component'
+          './views/product/product-detail/product-detail.component'
         )
       ).ProductDetailComponent,
   },
