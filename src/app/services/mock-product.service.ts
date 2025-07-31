@@ -4,6 +4,8 @@ import { MOCK_PRODUCTS } from '../mocks/products.mock';
 import { Category } from '../interfaces/product/category.model';
 import { MOCK_categories } from '../mocks/categories.mock';
 import { Product } from '../interfaces/product/product.model';
+import { MOCK_PRODUCTS_supermarché } from '../mocks/products-supermarché.mock';
+import { MOCK_CATEGORIES_supermarche } from '../mocks/categories_supermarché.mock';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ import { Product } from '../interfaces/product/product.model';
 export class MockProductService {
   selectedProduct: Product | undefined;
   selectedProductSignal = signal({});
-  MOCK_PRODUCTS = MOCK_PRODUCTS;
+  MOCK_PRODUCTS = MOCK_PRODUCTS_supermarché;
   constructor() {}
 
   getProducts(): Observable<any[]> {
@@ -19,7 +21,7 @@ export class MockProductService {
   }
   
   getCategories(): Observable<Category[]> {
-    return of(MOCK_categories);
+    return of(MOCK_CATEGORIES_supermarche);
   }
 
   create(product: Product): Observable<boolean> {

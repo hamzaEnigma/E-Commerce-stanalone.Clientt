@@ -131,4 +131,9 @@ export class ListProductsComponent {
   AddToChart(item:Product){
     this.chartService.addToChart(item,1);
   }
+
+  onImageError(event:Event){
+      const target = event.target as HTMLImageElement;
+      target.src = 'images/default-image.png'
+  }
 }

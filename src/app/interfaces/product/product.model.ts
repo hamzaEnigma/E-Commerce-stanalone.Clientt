@@ -10,4 +10,6 @@ export interface Product {
   category?: Category;
   imageUrl?: string;
   description?:string;
+  sellPrice?:number;
+  stockLimit?:number;
 }

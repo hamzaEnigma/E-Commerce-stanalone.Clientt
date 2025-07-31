@@ -71,7 +71,7 @@
                 <div class="col-6 col-md-3">
                     <div class="product-card">
                         <img [src]="item.imageUrl" alt="{{ item.productName }}" class="card-img-top"
-                            style="object-fit: cover; height: 180px; width: 100%;"  />
+                            style="object-fit: cover; height: 180px; width: 100%;" (error)="onImageError($event)"  />
                         <p class="name-product" (click)="selectProduct(item)" routerLink="/product/details">{{item.productName}}</p>
                         <span class="category">{{item.category?.categoryName}}</span>
                         <div class="rating">
@@ -79,7 +79,7 @@
                             <span class="votes">(2,1 k)</span>
                         </div>
                         <p class="sales">Plus de 700 achetés au cours du mois dernier</p>
-                        <div class="price">{{item.purchasePrice}}<sup>99</sup> €</div>
+                        <div class="price">{{item.purchasePrice}} €</div>
                         <div class="delivery">Livraison GRATUITE <b>21 - 24 juil.</b></div>
                         <button class="btn btn-primary" (click)="AddToChart(item)">Ajouter au panier</button>
                     </div>
