@@ -1,0 +1,15 @@
+.overlay-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Optionnel : flou du fond quand loading */
+.blur {
+  filter: blur(2px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+}

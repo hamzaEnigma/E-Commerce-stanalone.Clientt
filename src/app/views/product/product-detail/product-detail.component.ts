@@ -4,6 +4,8 @@ import { Product } from '../../../interfaces/product/product.model';
 import { FormsModule } from '@angular/forms';
 import { ChartService } from '../../../services/chart/chart.service';
 import { orderDetail } from '../../../interfaces/chart/order-detail.model';
+import { LoaderService } from '../../../services/loader/loader.service';
+import { delay, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,6 +15,7 @@ import { orderDetail } from '../../../interfaces/chart/order-detail.model';
 })
 export class ProductDetailComponent {
   mockProductService = inject(MockProductService);
+  loaderService = inject(LoaderService);
   chartService = inject(ChartService);
   selectedProduct:Product | undefined = undefined;
   quantity: number = 1;
@@ -22,6 +25,8 @@ export class ProductDetailComponent {
   }
   
   addToChart(p:Product){
-    this.chartService.addToChart(p,this.quantity);
+    this.chartService
+          .addToChart(p, this.quantity)
+          .subscribe();
   }
 }

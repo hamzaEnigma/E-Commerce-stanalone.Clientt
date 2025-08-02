@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { orderDetail } from '../../interfaces/chart/order-detail.model';
 import { Product } from '../../interfaces/product/product.model';
 import { ToastService } from '../toast-service/toast.service';
@@ -16,10 +16,11 @@ export class ChartService {
   private toastService = inject(ToastService);
   total$ = this.totalSubject.asObservable();
   panierCount = signal(0);
-
+  private _sidebarOpen = signal(false);
+  sidebarOpen = this._sidebarOpen.asReadonly();
   constructor() {}
 
-  addToChart(product: Product, q: number) {
+  addToChart(product: Product, q: number):Observable<number | undefined> {
     const itemsUpdated = [...this.itemsCart()];
     const index = this.findProductInChart(product.productId!);
 
@@ -36,6 +37,8 @@ export class ChartService {
 
     this._itemCartSignal.set(itemsUpdated);
     this.updateTotal(itemsUpdated);
+    this._sidebarOpen.set(true); // ouvrir sidebar après ajout
+    return of(product.productId);
   }
 
   getOrderId(): number {
@@ -76,5 +79,9 @@ export class ChartService {
       items.splice(index, 1);
     }
     this._itemCartSignal.set(items);
+  }
+  
+  closeSidebar() {
+    this._sidebarOpen.set(false);
   }
 }
