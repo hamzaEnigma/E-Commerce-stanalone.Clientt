@@ -29,7 +29,9 @@ export class ChartService {
     } else {
       const order = this.createOrderDetail(product, q);
       itemsUpdated.push(order);
-      this.toastService.show(`Produit ${product?.productName} ajouté au panier`);
+      this.toastService.show(
+        `Produit ${product?.productName} ajouté au panier`
+      );
     }
 
     this._itemCartSignal.set(itemsUpdated);
@@ -41,9 +43,11 @@ export class ChartService {
     const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
     return nextId;
   }
-  
+
   private findProductInChart(ProductId: number): number {
-    return this.itemsCart().findIndex((x) => x.product?.productId === ProductId);
+    return this.itemsCart().findIndex(
+      (x) => x.product?.productId === ProductId
+    );
   }
 
   private createOrderDetail(product: Product, quantity: number): orderDetail {
@@ -65,4 +69,12 @@ export class ChartService {
     this.totalSubject.next(total);
   }
 
+  delete(id: number) {
+    const items = [...this.itemsCart()];
+    const index = items.findIndex((x) => (x.OrderId = id));
+    if (index != -1) {
+      items.splice(index, 1);
+    }
+    this._itemCartSignal.set(items);
+  }
 }
