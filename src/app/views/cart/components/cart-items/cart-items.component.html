@@ -1,0 +1,62 @@
+
+@let listDetails = orderDetails();
+
+@for (item of listDetails; track $index) {
+<div class="cart-item d-flex align-items-start border-bottom py-3">
+    <div class="d-flex align-items-center me-3 h-100">
+        <input type="checkbox" class="me-3 mt-2" checked>
+    </div>
+
+    <img [src]="item.product?.imageUrl" alt="{{ 'name' }}" class="card-img-top"
+        style="object-fit: cover; height: 230px; width: 22%;     border-radius: 5px;" />
+
+    <div class="details flex-grow-1">
+        <h5 class="mb-1 fw-normal text-truncate-2"
+            style="font-size: 1.3rem;font-weight: bold; font-weight: 700 !important;">
+            {{item.product?.productName}}
+        </h5>
+
+        <span class="badge-custom " [ngClass]="getStockBadgeClass(item)" [@fadeChange]="getStockBadgeClass(item)">
+            <strong>{{getStockBadgeLabel(item)}}</strong>
+        </span>
+
+        <p class="text-muted mb-2 small text-truncate-2">
+            {{item.product?.description}} <a href="#">En savoir plus</a>
+        </p>
+        <p class="mb-1"><strong>category:</strong> {{item.product?.category?.categoryName}}</p>
+        <p class="mb-3"><strong>Poids:</strong> 1---10kg </p>
+
+        <div class="d-flex align-items-center mb-2">
+            <div class="border rounded-pill px-3 py-1 d-flex align-items-center justify-content-between quantity"
+                style="width: fit-content; gap: 0.5rem;">
+                <button class="btn btn-sm px-2 d-flex flex-column justify-content-center fs-6"
+                    (click)="decrementQuantity(item)">−</button>
+
+                <input [(ngModel)]="item.Quantity" readonly class="form-control border-0 text-center fw-bold"
+                    style="width: 50px; padding: 0;" min="1" />
+
+                <button class="btn btn-sm px-2 d-flex flex-column justify-content-center fs-6"
+                    (click)="incrementQuantity(item)">+</button>
+            </div>
+
+
+            <div class="ms-3">
+                <a href="#" class="text-decoration-none  me-2"
+                    (click)="deleteItemFromChart($event ,item.OrderId!)">Supprimer <svg
+                        xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#434343">
+                        <path
+                            d="M600-240v-80h160v80H600Zm0-320v-80h280v80H600Zm0 160v-80h240v80H600ZM120-640H80v-80h160v-60h160v60h160v80h-40v360q0 33-23.5 56.5T440-200H200q-33 0-56.5-23.5T120-280v-360Zm80 0v360h240v-360H200Zm0 0v360-360Z" />
+                    </svg></a>
+                <a href="#" class="text-decoration-none  me-2">Mettre de côté |</a>
+                <a href="#" class="text-decoration-none  me-2">Voir plus de produits similaires </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center justify-content-between fw-bold price">
+        <div>{{item.product?.purchasePrice}} € <span>(Unité)</span></div>
+        <div class="fs-5 text-muted">{{ (item.product?.purchasePrice! * item.Quantity).toFixed(2) }} €</div>
+    </div>
+</div>
+}

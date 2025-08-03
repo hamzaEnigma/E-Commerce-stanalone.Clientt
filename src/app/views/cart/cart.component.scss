@@ -1,10 +1,3 @@
-.amazon-product {
-    display: flex;
-    gap: 30px;
-    padding: 30px;
-    font-family: Arial, sans-serif;
-}
-
 .product-right {
     width: 250px;
     height: 300px;
@@ -15,96 +8,6 @@
     flex-direction: column;
     justify-content: space-around;
     height: 265px;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    background: #fff;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
-    height: 265px;
-}
-
-
-.details {
-    flex: 1;
-}
-
-.details h4 {
-    margin: 0 0 5px;
-    font-size: 16px;
-}
-
-.stock {
-    margin: 5px 0;
-    color: green;
-}
-
-.quantity {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-    background-color: #ffd814;
-    border-color: #ffd814;
-}
-
-.quantity button {
-    width: 25px;
-    height: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    cursor: pointer;
-}
-
-.quantity span {
-    min-width: 20px;
-    text-align: center;
-}
-
-.quantity * {
-    border: 0px !important;
-}
-
-.actions a {
-    font-size: 0.9em;
-    color: #007185;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-.price {
-    min-width: 80px;
-    text-align: right;
-    font-size: 16px;
-}
-
-a {
-    font-size: medium;
-    font-weight: 700;
-}
-
-.details p,
-a {
-    font-size: medium;
-    font-weight: 700;
-}
-
-.quantity button {
-    margin-top: 1px;
-}
-
-.price {
-    min-width: 80px;
-    font-size: 1.5rem;
 }
 
 button {
@@ -122,38 +25,6 @@ button:hover {
     border-color: #e47911;
 }
 
-.total {
-    color: #b12704
-}
 
-.text-truncate-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-.badge-custom {
-  display: inline-block;
-  padding: 0.4rem 0.9rem;
-  border-radius: 2rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1px solid transparent;
-  transition: all 0.3s ease-in-out;
-}
 
-/* ✅ En stock : vert */
-.badge-stock {
-  background-color: #e6f4ea;
-  color: #2e7d32;
-  border-color: #c8e6c9;
-}
-
-/* ❌ Stock insuffisant : rouge rosé */
-.badge-warning {
-  background-color: #fff3cd;
-  color: #856404;
-  border-color: #ffeeba;
-}
