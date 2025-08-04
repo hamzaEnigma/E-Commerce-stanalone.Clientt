@@ -7,15 +7,19 @@ export const routes: Routes = [
     path: 'product/details',
     loadComponent: async () =>
       (
-        await import(
-          './views/product/product-detail/product-detail.component'
-        )
+        await import('./views/product/product-detail/product-detail.component')
       ).ProductDetailComponent,
   },
   {
     path: 'cart',
     loadComponent: async () =>
       (await import('./views/cart/cart.component')).CartComponent,
+  },
+  {
+    path:'checkout',
+    loadComponent : async () => 
+      (await import('./views/cart/components/cart-checkout/cart-checkout.component')).CartCheckoutComponent,
+    
   },
   {
     path: 'admin',

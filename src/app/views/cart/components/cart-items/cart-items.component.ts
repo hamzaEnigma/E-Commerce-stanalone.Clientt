@@ -68,6 +68,6 @@ export class CartItemsComponent {
   deleteItemFromChart(event: Event, id: number) {
     event.preventDefault();
     // empêche la redirection
-    this.chartService.delete(id);
+    this.chartService.deleteFromChart(id);
   }
 }

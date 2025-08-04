@@ -1,5 +1,5 @@
+@let countProduct = orderDetails.length;
 <div class="container my-4">
-    @let countProduct = orderDetails.length;
     <div class="row">
         <div class="col-md-9">
             <app-cart-items></app-cart-items>
@@ -20,7 +20,7 @@
                     Livraison GRATUITE <strong>23 juillet</strong><br />
                     <small>Commandez dans les 3 h 12 min</small>
                 </div>
-                <button class="btn btn-primary">Passer la commande</button>
+                <button class="btn btn-primary" [routerLink]="['/checkout']" routerLinkActive="router-link-active" >Passer la commande</button>
             </div>
         </div>
     </div>

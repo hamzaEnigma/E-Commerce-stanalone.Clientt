@@ -3,9 +3,7 @@ import { MockProductService } from '../../../services/mock-product.service';
 import { Product } from '../../../interfaces/product/product.model';
 import { FormsModule } from '@angular/forms';
 import { ChartService } from '../../../services/chart/chart.service';
-import { orderDetail } from '../../../interfaces/chart/order-detail.model';
 import { LoaderService } from '../../../services/loader/loader.service';
-import { delay, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',

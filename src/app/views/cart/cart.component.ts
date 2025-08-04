@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { orderDetail } from '../../interfaces/chart/order-detail.model';
 import { ChartService } from '../../services/chart/chart.service';
 import { CartItemsComponent } from './components/cart-items/cart-items.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, FormsModule, CartItemsComponent],
+  imports: [CommonModule, FormsModule, CartItemsComponent,RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })

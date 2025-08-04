@@ -1,5 +1,5 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { effect, inject, Injectable, signal } from '@angular/core';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { orderDetail } from '../../interfaces/chart/order-detail.model';
 import { Product } from '../../interfaces/product/product.model';
 import { ToastService } from '../toast-service/toast.service';
@@ -15,10 +15,17 @@ export class ChartService {
   totalSubject = new BehaviorSubject<number | undefined>(0);
   private toastService = inject(ToastService);
   total$ = this.totalSubject.asObservable();
-  panierCount = signal(0);
   private _sidebarOpen = signal(false);
   sidebarOpen = this._sidebarOpen.asReadonly();
-  constructor() {}
+
+  constructor() {
+    
+    effect(()=>{
+      console.log('-----------------------------------');
+      console.log('🛒 Cart Items Signal:', this.itemsCart());
+      this.total$.pipe(tap((total)=>console.log('💰 Total:', total))).subscribe();
+    })
+  }
 
   addToChart(product: Product, q: number):Observable<number | undefined> {
     const itemsUpdated = [...this.itemsCart()];
@@ -35,16 +42,8 @@ export class ChartService {
       );
     }
 
-    this._itemCartSignal.set(itemsUpdated);
-    this.updateTotal(itemsUpdated);
-    this._sidebarOpen.set(true); // ouvrir sidebar après ajout
+    this.updateObservablesAndSignals(itemsUpdated);
     return of(product.productId);
-  }
-
-  getOrderId(): number {
-    const ids = this.itemsCart().map((x) => x.OrderId ?? 0);
-    const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
-    return nextId;
   }
 
   private findProductInChart(ProductId: number): number {
@@ -52,11 +51,11 @@ export class ChartService {
       (x) => x.product?.productId === ProductId
     );
   }
-
+  
   private createOrderDetail(product: Product, quantity: number): orderDetail {
     return {
+      orderDetailId:this.getOrderDeatilId(),
       product: product,
-      OrderId: this.getOrderId(),
       productId: product.productId,
       Quantity: quantity,
       SalePrice: 0,
@@ -72,16 +71,28 @@ export class ChartService {
     this.totalSubject.next(total);
   }
 
-  delete(id: number) {
+  deleteFromChart(id: number) {
     const items = [...this.itemsCart()];
-    const index = items.findIndex((x) => (x.OrderId = id));
+    const index = items.findIndex((x) => (x.orderDetailId === id));
     if (index != -1) {
       items.splice(index, 1);
     }
-    this._itemCartSignal.set(items);
+    this.updateObservablesAndSignals(items);
   }
   
   closeSidebar() {
     this._sidebarOpen.set(false);
+  }
+
+  getOrderDeatilId():number {
+    const ids = this.itemsCart().map(i=>i.orderDetailId ?? 0);
+    const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1 ;
+    return nextId;
+  }
+
+  updateObservablesAndSignals(itemsUpdated:orderDetail[]){
+    this._itemCartSignal.set(itemsUpdated);
+    this.updateTotal(itemsUpdated);
+    this._sidebarOpen.set(true); // ouvrir sidebar après ajout
   }
 }
