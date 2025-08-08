@@ -1,0 +1,37 @@
+
+<button class="btn-primary" (click)="remplir()">remplir</button>
+<form [formGroup]="userForm" (submit)="submit()" class="card">
+    <h2 class="mb-3">Inscription</h2>
+    <div class="flex flex-col mb-3"> 
+        <!-- <label for="email">Email</label>  -->
+        <input formControlName="email" type="text" class="form-control shadow-sm" placeholder="Email"
+            id="email" /> 
+        @if (emailControl.errors?.['required'] && (emailControl.touched || formSubmitted())) { <p
+            class="error">Email obligatoire</p> 
+        } 
+    </div>
+    <div class="flex flex-col mb-3"> 
+        <!-- <label for="username">Nom d'utilisateur</label>  -->
+        <input formControlName="username" class="form-control shadow-sm" placeholder="Nom d'utilisateur"
+            type="text" id="username" />
+        @if (usernameControl.errors?.['required'] && (usernameControl.touched ||
+        formSubmitted())) { <p class="error">Nom d'utilisateur obligatoire</p>
+        }
+        @if
+        (usernameControl.errors?.['minLength'] && (usernameControl.touched || formSubmitted())) { <p class="error">Nom
+            d'utilisateur trop court</p>
+        }
+    </div>
+    <div class="flex flex-col mb-3"> 
+        <!-- <label for="password">Mot de passe</label>  -->
+        <input formControlName="password"  type="password" id="password"  class="form-control shadow-sm" placeholder="mot de passe"/>
+        @if (passwordControl.errors?.['required'] && (passwordControl.touched || formSubmitted()))
+        { <p class="error">
+            Mot de passe obligatoire</p> }
+        @if (passwordControl.errors?.['minlength'] && (passwordControl.touched ||
+        formSubmitted())) { <p class="error">Mot de passe trop court</p>
+        } </div>
+    <div> 
+    
+    <button class="btn btn-primary">Sauvegarder</button> </div>
+</form>

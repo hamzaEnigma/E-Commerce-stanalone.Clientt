@@ -9,8 +9,17 @@
         <li class="nav-item"><a class="nav-link" routerLink="/admin" routerLinkActive="active-link">Admin</a></li>
       </ul>
     </div>
-    <div class="position-relative panier-icon" >
-     <a routerLink="/cart" routerLinkActive="active-link">🛒 <span class="badge bg-dark position-absolute top-0 start-100 translate-middle rounded-circle"> {{panierCount()}}</span></a>
+    <div class="d-flex flex-row right-nav">
+
+      <ul class="navbar-nav gap-3">
+        <li class="nav-item"><a  class="nav-link" routerLink="/sign-up" routerLinkActive="active-link"> S'inscrire</a></li>
+        <li class="nav-item"><a  class="nav-link" routerLink="/sign-in" routerLinkActive="active-link"> Se connecter</a></li>
+      </ul>
+            <div class="position-relative panier-icon">
+        <a routerLink="/cart" routerLinkActive="active-link">🛒 <span
+            class="badge bg-dark position-absolute top-0 start-100 translate-middle rounded-circle">
+            {{panierCount()}}</span></a>   
+      </div>
     </div>
   </div>
 </nav>

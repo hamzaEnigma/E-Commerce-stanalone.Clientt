@@ -22,6 +22,11 @@ export const routes: Routes = [
     
   },
   {
+    path:'sign-up',
+    loadComponent : async () => 
+      (await import('./views/user/components/sign-up/sign-up.component')).SignUpComponent,
+  },
+  {
     path: 'admin',
     loadChildren: async () =>
       (await import('./views/admin/admin.routes')).routes,

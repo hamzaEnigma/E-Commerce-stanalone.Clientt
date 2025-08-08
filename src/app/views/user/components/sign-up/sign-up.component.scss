@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    background-color: white;
+    min-width: 500px;
+}
+
+.error {
+    color: red;
+    font-size: 0.875rem;
+}
