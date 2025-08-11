@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../../../services/user/user.service';
-import { RegisterForm } from '../../../../interfaces/user/userForm.model';
-import { ToastService } from '../../../../services/toast-service/toast.service';
+import { UserService } from '../../../services/user/user.service';
+import { RegisterForm } from '../../../interfaces/user/userForm.model';
+import { ToastService } from '../../../services/toast-service/toast.service';
 
 @Component({
   selector: 'app-sign-up',

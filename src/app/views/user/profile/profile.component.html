@@ -1,0 +1,10 @@
+@let user = connectedUser |async;
+<div>
+    {{ user }}
+    ---- <br>
+
+    user : 
+    {{user?.userName}}
+    password :
+    {{ user?.password }}
+</div>

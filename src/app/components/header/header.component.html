@@ -21,7 +21,7 @@
         <li class="nav-item"><a  class="nav-link" routerLink="/sign-in" routerLinkActive="active-link">  Connecter</a></li>
         }
         @if( isLoggedIn$ | async ){
-        <li class="nav-item"><a  class="nav-link" > Profil</a></li>
+        <li class="nav-item"><a  class="nav-link" routerLink="/profile" routerLinkActive="active-link" > Profil</a></li>
         <li class="nav-item"><a  class="nav-link" (click)="logout()"> Déconnexion</a></li>
         }
       </ul>

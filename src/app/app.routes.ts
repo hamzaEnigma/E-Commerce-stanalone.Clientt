@@ -24,12 +24,17 @@ export const routes: Routes = [
   {
     path:'sign-up',
     loadComponent : async () => 
-      (await import('./views/user/components/sign-up/sign-up.component')).SignUpComponent,
+      (await import('./views/user/sign-up/sign-up.component')).SignUpComponent,
   },
   {
     path:'sign-in',
     loadComponent : async () => 
       (await import('./views/user/sign-in/sign-in.component')).SignInComponent,
+  },
+  {
+    path:'profile',
+    loadComponent : async () => 
+      (await import('./views/user/profile/profile.component')).ProfileComponent,
   },
   {
     path: 'admin',
