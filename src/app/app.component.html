@@ -1,8 +1,6 @@
 <app-header></app-header>
-<div class="container loader-wrapper position-relative">
   <app-loader *ngIf="isLoading"></app-loader>
   <app-toast-alert></app-toast-alert>
-  <div [class.blur]="isLoading">
+  <div class="container loader-wrapper position-relative" [class.blur]="isLoading">
     <router-outlet />
   </div>
-</div>

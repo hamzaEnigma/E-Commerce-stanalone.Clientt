@@ -27,6 +27,11 @@ export const routes: Routes = [
       (await import('./views/user/components/sign-up/sign-up.component')).SignUpComponent,
   },
   {
+    path:'sign-in',
+    loadComponent : async () => 
+      (await import('./views/user/sign-in/sign-in.component')).SignInComponent,
+  },
+  {
     path: 'admin',
     loadChildren: async () =>
       (await import('./views/admin/admin.routes')).routes,
