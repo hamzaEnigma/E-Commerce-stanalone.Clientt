@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { User } from '../../interfaces/user/user.model';
+import { mapIdentityUser, User } from '../../interfaces/user/user.model';
 import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { AuthResponse } from '../../interfaces/user/AuthResponse.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -50,8 +50,12 @@ export class UserService {
   loginUser(loginModel:Login):Observable<User>{
     return this.http.post<AuthResponse>(api_user+'Login',loginModel).pipe(
       tap((res)=>{this.saveAuth(res)}),
+      tap((res)=>console.log('user from back',res.user)),
       tap(()=>this.authChangedSubject.next(true)),
-      map(res => res.user as User),
+      map(res => {
+        const user = mapIdentityUser(res.user)
+        return user
+      }),
       tap(()=>this.router.navigate(['/products'])),
       catchError(err => throwError(() => err))
     )
@@ -61,13 +65,13 @@ export class UserService {
     localStorage.setItem(ACCESS_KEY,res.token);
     if (res.user){
       localStorage.setItem(USER_KEY,JSON.stringify(res.user))
-      this.currentUserSubject.next(res.user);
+      const user = mapIdentityUser(res.user)
+      this.currentUserSubject.next(user);
     }
   }
 
   logOut():void {
     localStorage.removeItem(ACCESS_KEY);
-    this.authChangedSubject.next(false);
     this.router.navigate(['/sign-in']); // ✅ redirect after logout
   }
 

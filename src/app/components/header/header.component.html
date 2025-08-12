@@ -7,24 +7,38 @@
         <li class="nav-item"><a class="nav-link" routerLink="/products" routerLinkActive="active-link">Boutique</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/cart" routerLinkActive="active-link">Panier</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/admin" routerLinkActive="active-link">Admin</a></li>
-      </ul>
+        <div class="position-relative panier-icon">
+          <a routerLink="/cart" routerLinkActive="active-link">🛒 <span
+              class="badge bg-dark position-absolute top-0 start-100 translate-middle rounded-circle">
+              {{panierCount()}}</span></a>
+        </div>
+        </ul>
     </div>
     <div class="d-flex flex-row right-nav">
-        <div class="position-relative panier-icon">
-        <a routerLink="/cart" routerLinkActive="active-link">🛒 <span
-            class="badge bg-dark position-absolute top-0 start-100 translate-middle rounded-circle">
-            {{panierCount()}}</span></a>   
-      </div>
+
       <ul class="navbar-nav gap-3">
         @if( !(isLoggedIn$ | async) ){
         <li class="nav-item"><a  class="nav-link" routerLink="/sign-up" routerLinkActive="active-link"> S'inscrire</a></li>
         <li class="nav-item"><a  class="nav-link" routerLink="/sign-in" routerLinkActive="active-link">  Connecter</a></li>
         }
-        @if( isLoggedIn$ | async ){
-        <li class="nav-item"><a  class="nav-link" routerLink="/profile" routerLinkActive="active-link" > Profil</a></li>
-        <li class="nav-item"><a  class="nav-link" (click)="logout()"> Déconnexion</a></li>
-        }
       </ul>
+        @if( isLoggedIn$ | async ){
+          <div class="dropdown">
+            <button class="profile-btn" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Profile menu">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <circle cx="12" cy="7.5" r="4" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M4 20.5c0-3.8 3.6-5.8 8-5.8s8 2 8 5.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+              </svg>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" routerLink="/profile" >Profile</a></li>
+              <li><a class="dropdown-item" >Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+            </ul>
+          </div>
+        }
+
     </div>
   </div>
 </nav>

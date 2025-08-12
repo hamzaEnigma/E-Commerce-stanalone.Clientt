@@ -1,10 +1,231 @@
-@let user = connectedUser |async;
-<div>
-    {{ user }}
-    ---- <br>
-
-    user : 
-    {{user?.userName}}
-    password :
-    {{ user?.password }}
+<pre>{{ user$ | async | json }}</pre>
+@let user = user$ | async ;
+<div *ngIf="user$ | async as user">
 </div>
+<!-- Bootstrap 5 profile page (drop into your app layout) -->
+
+<section class="profile-page py-4">
+  <div class="container">
+    <!-- Cover + avatar -->
+    <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+      <div class="profile-cover position-relative">
+        <div class="cover-bg"></div>
+        <div class="d-flex align-items-end gap-3 position-absolute start-0 bottom-0 p-3">
+          <div class="avatar-wrap">
+            <img [src]="'images/default-image.png'" alt="" class="card-img-top"
+            style="object-fit: cover; height: 100%; width: 100%;" (error)="onImageError($event)"  />
+          </div>
+          <div class="pb-2">
+            <h4 class="mb-1">    {{user?.userName}}</h4>
+            <div class="text-muted small">{{user?.email}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body pt-4">
+        <div class="row g-4">
+          <!-- Left column: quick info -->
+          <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <h6 class="text-uppercase text-muted mb-3">Profile</h6>
+                <ul class="list-unstyled mb-0">
+                  <li class="d-flex justify-content-between py-2 border-bottom">
+                    <span>Nom et prénom</span><strong> {{user?.userName }}</strong>
+                  </li>
+                  <li class="d-flex justify-content-between py-2 border-bottom">
+                    <span>Role</span><strong>Customer</strong>
+                  </li>
+                  <li class="d-flex justify-content-between py-2 border-bottom">
+                    <span>Member depuis</span><strong>Jan 2023</strong>
+                  </li>
+                  <li class="d-flex justify-content-between py-2">
+                    <span>Status</span><span class="badge bg-success">Active</span>
+                  </li>
+                </ul>
+                <div class="d-grid mt-3">
+                  <a href="#orders" class="btn btn-outline-primary">Voir les commandes</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mt-4">
+              <div class="card-body">
+                <h6 class="text-uppercase text-muted mb-3">Addresses</h6>
+                <div class="mb-2">
+                  <div class="fw-semibold">Shipping</div>
+                  <div class="small text-muted">12 Rue Exemple, 75001 Paris, France</div>
+                </div>
+                <div class="d-grid mt-3">
+                  <button class="btn btn-outline-secondary">Gérer les adresses</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column: tabs + forms -->
+          <div class="col-lg-8">
+            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab">Compte</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">Securité</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab">Commandes</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#preferences" type="button" role="tab">Préférences</button>
+              </li>
+            </ul>
+
+            <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white shadow-sm">
+              <!-- Account -->
+              <div class="tab-pane fade show active" id="account" role="tabpanel">
+                <form class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">First name</label>
+                    <input type="text" class="form-control" placeholder="John">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Last name</label>
+                    <input type="text" class="form-control" placeholder="Doe">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="john@example.com">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-control" placeholder="+33 6 12 34 56 78">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+                  </div>
+                  <div class="col-12 d-flex gap-2">
+                    <button class="btn btn-primary" type="submit">Save changes</button>
+                    <button class="btn btn-outline-secondary" type="reset">Reset</button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Security -->
+              <div class="tab-pane fade" id="security" role="tabpanel">
+                <form class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Current password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">New password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Confirm new password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Update password</button>
+                  </div>
+                </form>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">Two‑factor authentication</div>
+                    <div class="text-muted small">Add an extra layer of security to your account.</div>
+                  </div>
+                  <button class="btn btn-outline-secondary">Configure</button>
+                </div>
+
+                <div class="alert alert-danger mt-4">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>Danger zone</strong>
+                      <div class="small">Delete your account and all associated data.</div>
+                    </div>
+                    <button class="btn btn-danger">Delete account</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Orders -->
+              <div class="tab-pane fade" id="orders" role="tabpanel">
+                <div class="table-responsive">
+                  <table class="table align-middle">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>ORD-1001</td>
+                        <td>2025-07-28</td>
+                        <td><span class="badge bg-info text-dark">Shipped</span></td>
+                        <td>€129.90</td>
+                        <td><a href="#" class="btn btn-sm btn-outline-primary">Details</a></td>
+                      </tr>
+                      <tr>
+                        <td>ORD-0992</td>
+                        <td>2025-07-10</td>
+                        <td><span class="badge bg-success">Delivered</span></td>
+                        <td>€59.00</td>
+                        <td><a href="#" class="btn btn-sm btn-outline-primary">Details</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Preferences -->
+              <div class="tab-pane fade" id="preferences" role="tabpanel">
+                <form class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Language</label>
+                    <select class="form-select">
+                      <option selected>English</option>
+                      <option>Français</option>
+                      <option>Deutsch</option>
+                      <option>Español</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Theme</label>
+                    <select class="form-select">
+                      <option selected>System</option>
+                      <option>Light</option>
+                      <option>Dark</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                      <label class="form-check-label" for="emailNotif">Email notifications</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="smsNotif">
+                      <label class="form-check-label" for="smsNotif">SMS notifications</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Save preferences</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /Right -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

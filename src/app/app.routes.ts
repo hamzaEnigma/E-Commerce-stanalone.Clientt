@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ListProductsComponent } from './views/product/list-products/list-products.component';
+import { authGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
   { path: 'products', component: ListProductsComponent },
@@ -35,6 +36,7 @@ export const routes: Routes = [
     path:'profile',
     loadComponent : async () => 
       (await import('./views/user/profile/profile.component')).ProfileComponent,
+    canActivate:[authGuard]
   },
   {
     path: 'admin',
