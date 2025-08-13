@@ -3,10 +3,11 @@ import { UserService } from '../../../services/user/user.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../interfaces/user/user.model';
 import { Observable } from 'rxjs';
+import { AccountFormComponent } from "../components/account-form/account-form.component";
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule],
+  imports: [CommonModule, AccountFormComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

@@ -2,7 +2,7 @@
 <form [formGroup]="userForm" (submit)="submit()" class="card">
     <h1 class="mb-3 mt-3 d-flex flew-row justify-content-center">Inscription</h1>
     <div class="flex flex-col ms-2 mb-3"> 
-        <!-- <label for="email">Email</label>  -->
+        <label class="form-label">Email</label>
         <input formControlName="email" type="text" class="form-control shadow-sm" placeholder="Email"
             id="email" /> 
         @if (emailControl.errors?.['required'] && (emailControl.touched || formSubmitted())) { <p
@@ -10,7 +10,7 @@
         } 
     </div>
     <div class="flex flex-col ms-2 mb-3"> 
-        <!-- <label for="username">Nom d'utilisateur</label>  -->
+        <label class="form-label">Utilisateur</label>
         <input formControlName="username" class="form-control shadow-sm" placeholder="Nom d'utilisateur"
             type="text" id="username" />
         @if (usernameControl.errors?.['required'] && (usernameControl.touched ||
@@ -22,7 +22,7 @@
         }
     </div>
     <div class="flex flex-col ms-2 mb-3"> 
-        <!-- <label for="password">Mot de passe</label>  -->
+        <label class="form-label" for="password">Password</label>
         <input formControlName="password"  type="password" id="password"  class="form-control shadow-sm" placeholder="mot de passe"/>
         @if (passwordControl.errors?.['required'] && (passwordControl.touched || formSubmitted()))
         { <p class="error">

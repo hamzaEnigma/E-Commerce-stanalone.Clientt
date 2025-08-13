@@ -1,7 +1,7 @@
-import { IdentityUserDto, User } from "./user.model";
+import { User } from "./user.model";
 
 export interface AuthResponse {
     token:string,
     result:boolean,
-    user:IdentityUserDto
+    user:User
 }

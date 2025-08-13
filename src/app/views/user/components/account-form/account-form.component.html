@@ -1,0 +1,43 @@
+<form [formGroup]="accountForm" (ngSubmit)="submit()" class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label">First name</label>
+        <input type="text" class="form-control" formControlName="firstName" placeholder="John">
+        @if (firstNameControl.errors?.['required'] && (firstNameControl.touched || formSubmitted())) { <p class="error">
+            first Name
+            obligatoire</p>
+        }
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Last name</label>
+        <input type="text" class="form-control" formControlName="lastName" placeholder="Doe">
+        @if (lastNameControl.errors?.['required'] && (lastNameControl.touched || formSubmitted())) { <p class="error">
+            last Name
+            obligatoire</p>
+        }
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email" placeholder="john@example.com">
+        @if (emailControl.errors?.['required'] && (emailControl.touched || formSubmitted())) { <p class="error">Email
+            obligatoire</p>
+        }
+        @if (emailControl.errors?.['email'] && (emailControl.touched || formSubmitted())) { <p class="error">Email
+            obligatoire</p>
+        }
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-control" formControlName="phoneNumber" placeholder="+33 6 12 34 56 78">
+        @if (phoneNumberControl.errors?.['required'] && (phoneNumberControl.touched || formSubmitted())) {
+        <label class="error">Phone obligatoire </label>
+        }
+    </div>
+    <div class="col-12">
+        <label class="form-label">Bio</label>
+        <textarea class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+    </div>
+    <div class="col-12 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Save changes</button>
+        <button class="btn btn-outline-secondary" type="reset">Reset</button>
+    </div>
+</form>

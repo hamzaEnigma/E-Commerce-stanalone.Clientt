@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { mapIdentityUser, User } from '../../interfaces/user/user.model';
+import { effect, inject, Injectable } from '@angular/core';
+import { User } from '../../interfaces/user/user.model';
 import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { AuthResponse } from '../../interfaces/user/AuthResponse.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -14,18 +14,25 @@ const USER_KEY = 'auth.user';
   providedIn: 'root',
 })
 export class UserService {
-
   private http = inject(HttpClient);
   private router = inject(Router);
   currentUserSubject = new BehaviorSubject<User | undefined>(this.loadUser());
   currentUser$ = this.currentUserSubject.asObservable();
-  private authChangedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
+  private authChangedSubject = new BehaviorSubject<boolean>(
+    this.isAuthenticated()
+  );
   authChanged$ = this.authChangedSubject.asObservable();
-  
-  constructor() {}
+
+  constructor() {
+    this.currentUserSubject.subscribe(user=>{
+      console.log('----- START user service : -------');
+      console.log('currentUser$ :', user);
+      console.log('----- END user service : -------');
+    })
+  }
 
   async createUser(user: RegisterForm): Promise<User> {
-    const response = await fetch(api_user+ 'Register', {
+    const response = await fetch(api_user + 'Register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,57 +40,73 @@ export class UserService {
       body: JSON.stringify(user),
     });
     const body = await response.json();
-    if (response.ok){
+    if (response.ok) {
       return body as User;
-    }else {
-      throw new Error(body)
+    } else {
+      throw new Error(body);
     }
   }
 
-  register(registerForm:RegisterForm):Observable<AuthResponse>{
-    return this.http.post<AuthResponse>(api_user+'Register',registerForm).pipe(
-      tap((res)=> this.saveAuth(res)),
-      tap(()=>this.authChangedSubject.next(true))
+  register(registerForm: RegisterForm): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(api_user + 'Register', registerForm)
+      .pipe(
+        tap((res) => this.saveAuth(res)),
+        tap(() => this.authChangedSubject.next(true))
+      );
+  }
+
+  loginUser(loginModel: Login): Observable<User> {
+    return this.http.post<AuthResponse>(api_user + 'Login', loginModel).pipe(
+      tap((res) => {this.saveAuth(res)}),
+      tap((res) => console.log('------ User service login ------ user from back', res.user)),
+      tap(() => this.authChangedSubject.next(true)),
+      map((res) => { return res.user }),
+      tap(() => this.router.navigate(['/products'])),
+      catchError((err) => throwError(() => err))
+    );
+  }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(api_user + 'Update', user, { headers: this.getAuthHeaders() }).pipe(
+      tap((user) => console.log('------ User service Update ------ user from back', user)),
     )
   }
 
-  loginUser(loginModel:Login):Observable<User>{
-    return this.http.post<AuthResponse>(api_user+'Login',loginModel).pipe(
-      tap((res)=>{this.saveAuth(res)}),
-      tap((res)=>console.log('user from back',res.user)),
-      tap(()=>this.authChangedSubject.next(true)),
-      map(res => {
-        const user = mapIdentityUser(res.user)
-        return user
-      }),
-      tap(()=>this.router.navigate(['/products'])),
-      catchError(err => throwError(() => err))
-    )
-  }
-
-  saveAuth(res:AuthResponse){
-    localStorage.setItem(ACCESS_KEY,res.token);
-    if (res.user){
-      localStorage.setItem(USER_KEY,JSON.stringify(res.user))
-      const user = mapIdentityUser(res.user)
-      this.currentUserSubject.next(user);
+  saveAuth(res: AuthResponse) {
+    localStorage.setItem(ACCESS_KEY, res.token);
+    if (res.user) {
+      localStorage.setItem(USER_KEY, JSON.stringify(res.user));
+      this.currentUserSubject.next(res.user);
+    } else {
+      localStorage.removeItem(USER_KEY);
+      this.currentUserSubject.next(undefined);
     }
   }
 
-  logOut():void {
+  logOut(): void {
     localStorage.removeItem(ACCESS_KEY);
+    localStorage.removeItem(USER_KEY);
+    this.currentUserSubject.next(undefined)
+    this.authChangedSubject.next(false);
     this.router.navigate(['/sign-in']); // ✅ redirect after logout
   }
 
-  retieveToken():string | null {
+  retieveToken(): string | null {
     return localStorage.getItem(ACCESS_KEY) || null;
   }
 
   loadUser(): User | undefined {
-    const data = localStorage.getItem(USER_KEY);
-    console.log('user in service',data);
-    console.log('nodata',localStorage.getItem('USER_KEYs'));
-    return data as User;
+    const raw = localStorage.getItem(USER_KEY);
+    if (!raw) return undefined;
+    try {
+      const dto = JSON.parse(raw);
+      const user = dto;
+      return user;
+    } catch {
+      localStorage.removeItem(USER_KEY);
+      return undefined;
+    }
   }
 
   getAuthHeaders(): HttpHeaders {
