@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user/user.service';
 import { RegisterForm } from '../../../interfaces/user/userForm.model';
 import { ToastService } from '../../../services/toast-service/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,7 +14,8 @@ import { ToastService } from '../../../services/toast-service/toast.service';
 export class SignUpComponent {
   readonly fb = inject(FormBuilder);
   private userService = inject(UserService);
-  private toastService = inject(ToastService)
+  private toastService = inject(ToastService);
+  private router = inject(Router);
   userForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(2)]],
@@ -38,6 +40,7 @@ export class SignUpComponent {
       this.userService.register(this.userForm.value as RegisterForm).subscribe({
         next:(response)=>{
               this.toastService.show('Utilisateur créer avec succés');
+              this.router.navigate(['/sign-in'])
         },
         error:(err)=>{
               console.log('erreur sign up:',err.message);          

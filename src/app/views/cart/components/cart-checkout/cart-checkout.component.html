@@ -1,72 +1,109 @@
-    @let countProduct = orderDetails().length;
+@let countProduct = orderDetails().length;
 
-    <div class="row">
-        <!-- Formulaire de livraison -->
-        <h4 class="mb-3">Coordonnées de livraison</h4>
-        <div class="col-md-9 mb-4 card">
-                <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <input type="text" class="form-control shadow-sm" formControlName="customerName" placeholder="Prénom" />
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control shadow-sm" placeholder="Nom" />
-                        </div>
+<div class="row">
+    <!-- Formulaire de livraison -->
+    <form [formGroup]="userForm" class="row col-md-9 mb-4">
+            <!-- Card 1 -->
+                <div class="card mb-4">
+                <h4 class="mb-3 " >Compte</h4>
+                <div class="row g-3" formGroupName="account">
+                    <div class="col-md-6">
+                        <label class="form-label">UserName</label>
+                        <input type="text" class="form-control" formControlName="userName" placeholder="John">
+                        @if (usernameControl.errors?.['required'] && (usernameControl.touched || formSubmitted())) {
+                        <p class="error">Username obligatoire</p>
+                        }
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col">
-                        <input type="email" class="form-control shadow-sm" placeholder="E-mail" />                 
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-3">
-                        <div class="col-md-9">
-                            <input type="email" class="form-control shadow-sm" placeholder="E-mail" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control shadow-sm" placeholder="Adresse" />
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" formControlName="email" placeholder="john@example.com">
+                        @if (emailControl.errors?.['required'] && (emailControl.touched || formSubmitted())) {
+                        <p class="error">Email obligatoire</p>
+                        }
+                        @if (emailControl.errors?.['email'] && (emailControl.touched || formSubmitted())) {
+                        <p class="error">Format email invalide</p>
+                        }
                     </div>
 
-
-                    <h5 class="mt-4">Méthode de livraison</h5>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" checked />
-                        <label class="form-check-label">
-                            Livraison gratuite 
-                        </label>
+                    <div class="col-md-6">
+                        <label class="form-label" for="password">Password</label>
+                        <input formControlName="password" type="password" id="password" class="form-control shadow-sm"
+                            placeholder="mot de passe" />
+                        @if (passwordControl.errors?.['required'] && (passwordControl.touched || formSubmitted()))
+                        { <p class="error">
+                            Mot de passe obligatoire</p> }
+                        @if (passwordControl.errors?.['minlength'] && (passwordControl.touched ||
+                        formSubmitted())) { <p class="error">Mot de passe trop court</p>
+                        }
                     </div>
 
-                    <h5>Méthode de paiement</h5>
-                    <div class="d-flex gap-3">
-                        <button type="button" class="btn btn-primary w-50">
-                            <i class="bi bi-credit-card"></i> Carte bancaire
-                        </button>
-                        <button type="button" class="btn btn-primary w-50">
-                            <i class="bi bi-paypal"></i> Paypal
-                        </button>
+                    <div class="col-md-6">
+                        <label class="form-label" for="confirmPassword">Confirm Password</label>
+                        <input formControlName="confirmPassword" type="password" id="confirmPassword" class="form-control shadow-sm"
+                            placeholder="mot de passe" />
+                        @if (confirmPasswordControl.errors?.['required'] && (confirmPasswordControl.touched || formSubmitted()))
+                        { <p class="error">
+                            Mot de passe obligatoire</p> }
+                        @if (userForm.get('account')?.errors?.['passwordMismatch'] && (confirmPasswordControl.touched || formSubmitted())) {
+                        <p class="error">Les mots de passe ne correspondent pas</p>
+                        }
                     </div>
-                </form>
-
-        </div>
-
-        <!-- Résumé du panier -->
-        <div class="col-md-3">
-            <div class="product-right card">      
-                <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
-                    <p class="fw-bold m-0" style="font-size: 1.5rem;">Total :</p>
-                    <p class="fw-bold text-end m-0" style="font-size: 1.8rem;">{{ totalSum?.toFixed(2) }} €</p>
                 </div>
-                <div class="delivery-box">
-                    <strong>{{countProduct}}</strong> ARTICLE(S)<br />
-                    <small>Livraison gratuite à partir de 100$</small>
-                </div>
-                <div class="delivery-box">
-                    Livraison GRATUITE <strong>23 juillet</strong><br />
-                    <small>Commandez dans les 3 h 12 min</small>
-                </div>
-                <button class="btn btn-primary" (click)="submitForm()" >Finaliser la commande</button>
             </div>
+             <!-- end card 1 -->
+
+
+            <!-- Card 2 -->
+            <div class="card mb-4">
+                <h4 class="mb-3">Utilisateurs détails</h4>
+
+                <div class="row g-3" formGroupName="details">
+                    <div class="col-md-6">
+                        <label class="form-label">First name</label>
+                        <input type="text" class="form-control" formControlName="firstName" placeholder="John">
+                        @if (firstNameControl?.errors?.['required'] && (firstNameControl?.touched || formSubmitted())) {
+                        <p class="error">First Name obligatoire</p>
+                        }
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Last name</label>
+                        <input type="text" class="form-control" formControlName="lastName" placeholder="Doe">
+                        @if (lastNameControl?.errors?.['required'] && (lastNameControl?.touched || formSubmitted())) {
+                        <p class="error">Last Name obligatoire</p>
+                        }
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-control" formControlName="phoneNumber"
+                            placeholder="+33 6 12 34 56 78">
+                        @if (phoneNumberControl?.errors?.['required'] && (phoneNumberControl?.touched || formSubmitted()))
+                        {
+                        <label class="error">Phone obligatoire</label>
+                        }
+                    </div>
+                </div>
+            </div>
+
+    </form>
+    <!-- Résumé du panier -->
+    <div class="col-md-3 mb-4">
+        <div class="product-right card">
+            <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+                <p class="fw-bold m-0" style="font-size: 1.5rem;">Total :</p>
+                <p class="fw-bold text-end m-0" style="font-size: 1.8rem;">{{ totalSum?.toFixed(2) }} €</p>
+            </div>
+            <div class="delivery-box">
+                <strong>{{countProduct}}</strong> ARTICLE(S)<br />
+                <small>Livraison gratuite à partir de 100$</small>
+            </div>
+            <div class="delivery-box">
+                Livraison GRATUITE <strong>23 juillet</strong><br />
+                <small>Commandez dans les 3 h 12 min</small>
+            </div>
+            <button class="btn btn-primary" (click)="submitForm()">Créer compte et finaliser</button>
         </div>
     </div>
+</div>
